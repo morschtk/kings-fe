@@ -39,8 +39,9 @@ export class AppComponent implements OnInit {
     debugger;
     this.httpService.addInGame(this.newUser).subscribe(res => {
       this.isInGame = true;
-        this.userName = this.newUser;
-        this.router.navigate(['game']);
+      this.userName = this.newUser;
+      sessionStorage.setItem('kingsUser', this.newUser);
+      this.router.navigate(['game']);
     });
     this.httpService.getUsers().subscribe(res => {
       console.log(res);
