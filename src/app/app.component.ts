@@ -12,10 +12,10 @@ export class AppComponent implements OnInit {
   title = 'kings-fe';
   userName: string;
   newUser: string;
-  isInGame: boolean;
+  // isInGame: boolean;
 
   constructor(
-    private httpService: AppService,
+    public appService: AppService,
     private socketService: SocketioService,
     private router: Router,
   ) {}
@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     this.socketService.setupSocketConnection();
     const userName = sessionStorage.getItem('kingsUser');
     if (userName) {
-      this.httpService.addInGame(userName).subscribe(res => {
-        this.isInGame = true;
+      this.appService.addInGame(userName).subscribe(res => {
+        this.appService.isInGame = true;
         this.userName = userName;
         console.log(res);
       });
@@ -36,15 +36,17 @@ export class AppComponent implements OnInit {
   }
 
   addUser() {
-    debugger;
-    this.httpService.addInGame(this.newUser).subscribe(res => {
-      this.isInGame = true;
+    this.appService.addInGame(this.newUser).subscribe(res => {
+      this.appService.isInGame = true;
       this.userName = this.newUser;
-      sessionStorage.setItem('kingsUser', this.newUser);
+      // sessionStorage.setItem('kingsUser', this.newUser);
+      // sessionStorage.setItem('kingsIndex', res['index']);
       this.router.navigate(['game']);
-    });
-    this.httpService.getUsers().subscribe(res => {
-      console.log(res);
+
+
+      this.appService.getUsers().subscribe(res => {
+        console.log(res);
+      });
     });
   }
 }

@@ -1,9 +1,8 @@
 
 
-<div *ngIf="!isInGame">
+<div *ngIf="!appService.isInGame">
   <input [(ngModel)]="newUser" />
   <button (click)="addUser(newUser)">Add that User fool!</button> 
 </div>
 
-<h3>{{userName}} added</h3>
 <router-outlet></router-outlet>

@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment'
+
+export interface ICard {
+  url: string;
+  number: number;
+}
 
 @Injectable()
 export class AppService {
+  isInGame: boolean;
+  currentCard$ = new BehaviorSubject<ICard>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -20,10 +27,6 @@ export class AppService {
     return this.http.post(this.buildURL('add-to-game'), {user});
   }
 
-  // private generateHeaders = () => {
-  //   return {
-  //     headers: new HttpHeaders({'Content-Type': 'application/json'})
-  //   }
-  // }
+  // Next function to clear out curr card and set next player
 
 }

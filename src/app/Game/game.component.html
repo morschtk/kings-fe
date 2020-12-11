@@ -1,1 +1,12 @@
 <h1>yerrr {{user}}</h1>
+
+<div *ngIf="(appService.currentCard$| async) as card; else drawPhase">
+  <span>The card is {{card.number}}</span>
+</div>
+
+<ng-template #drawPhase>
+  <div>
+    <button (click)="drawCard()">Draw a card</button>
+  </div>
+</ng-template>
+
