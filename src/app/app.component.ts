@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { filter, take } from 'rxjs/operators';
 import { AppService } from './app-service';
 import { SocketioService } from './socketio.service';
 
@@ -12,7 +13,6 @@ export class AppComponent implements OnInit {
   title = 'kings-fe';
   userName: string;
   newUser: string;
-  // isInGame: boolean;
 
   constructor(
     public appService: AppService,
@@ -24,10 +24,15 @@ export class AppComponent implements OnInit {
     this.socketService.setupSocketConnection();
     const userName = sessionStorage.getItem('kingsUser');
     if (userName) {
-      this.appService.addInGame(userName).subscribe(res => {
-        this.appService.isInGame = true;
-        this.userName = userName;
-        console.log(res);
+      this.appService.whoAmI = userName;
+      this.socketService.addPlayer(userName);
+
+      // once data is retreived go into game
+      this.appService.currentPlayer$.pipe(
+        filter(player => !!player),
+        take(1)
+      ).subscribe(() => {
+        this.router.navigate(['game']);
       });
       // Transition to game
     } else {
@@ -36,17 +41,18 @@ export class AppComponent implements OnInit {
   }
 
   addUser() {
-    this.appService.addInGame(this.newUser).subscribe(res => {
-      this.appService.isInGame = true;
-      this.userName = this.newUser;
-      // sessionStorage.setItem('kingsUser', this.newUser);
-      // sessionStorage.setItem('kingsIndex', res['index']);
+    if (this.appService.players$.value.find(player => player === this.newUser)) {
+      return;
+    }
+    this.appService.whoAmI = this.newUser;
+    this.socketService.addPlayer(this.newUser);
+
+    // once data is retreived go into game
+    this.appService.currentPlayer$.pipe(
+      filter(player => !!player),
+      take(1)
+    ).subscribe(() => {
       this.router.navigate(['game']);
-
-
-      this.appService.getUsers().subscribe(res => {
-        console.log(res);
-      });
     });
   }
 }

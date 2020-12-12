@@ -1,12 +1,24 @@
-<h1>yerrr {{user}}</h1>
+<div style="display: flex; justify-content: space-around;">
+  <h1>yerrr {{appService.whoAmI}}</h1>
+  <h1>its {{(appService.currentPlayer$ | async)}} turn</h1>
+  <div style="display: flex; flex-direction: column;">
+    <span *ngFor="let player of (appService.players$ | async)">{{player}}</span>
+  </div>
+</div>
 
-<div *ngIf="(appService.currentCard$| async) as card; else drawPhase">
+<div *ngIf="(appService.currentCard$| async) as card">
   <span>The card is {{card.number}}</span>
 </div>
 
-<ng-template #drawPhase>
-  <div>
+<div *ngIf="(appService.currentPlayer$ | async) == appService.whoAmI">
+
+  <div *ngIf="appService.canEndTurn">
+    <button (click)="endTurn()">End Turn</button>
+  </div>
+
+  <div *ngIf="!(appService.currentCard$| async)">
     <button (click)="drawCard()">Draw a card</button>
   </div>
-</ng-template>
+</div>
+
 
