@@ -30,54 +30,54 @@ export class AppService {
 
 
   runCardOne() {
-    
+    this.canEndTurn = true;
   }
 
   runCardTwo() {
-
+    this.canEndTurn = true;
   }
 
   runCardThree() {
-    
+    this.canEndTurn = true;
   }
 
   runCardFour() {
-    
+    this.canEndTurn = true;
   }
 
   runCardFive() {
-    
+    this.canEndTurn = true;
   }
 
   runCardSix() {
-    
+    this.canEndTurn = true;
   }
 
   runCardSeven() {
-    
+    this.canEndTurn = true;
   }
 
   runCardEight() {
-    
+    this.canEndTurn = true;
   }
 
   runCardNine() {
-    
+    this.canEndTurn = true;
   }
 
   runCardTen() {
-
+    this.canEndTurn = true;
   }
 
   runCardJack() {
-
+    this.canEndTurn = true;
   }
 
   runCardQueen() {
-
+    this.canEndTurn = true;
   }
 
   runCardKing() {
-
+    this.canEndTurn = true;
   }
 }
