@@ -33,7 +33,7 @@ export class SocketioService {
       this.appService.setCurrentCard(card);
     });
 
-    this.socket.on('nextPlayerTurn', (player: IPlayer) => {
+    this.socket.on('nextPlayerTurn', (player: string) => {
       this.appService.currentCard$.next(null);
       this.appService.currentPlayer$.next(player);
       this.appService.canEndTurn = false;

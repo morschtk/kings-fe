@@ -15,7 +15,7 @@ export interface IPlayer {
 export class AppService {
   isInGame: boolean;
   currentCard$ = new BehaviorSubject<ICard>(null);
-  currentPlayer$ =  new BehaviorSubject<IPlayer>(null);
+  currentPlayer$ =  new BehaviorSubject<string>(null);
   whoAmI: string;
   canEndTurn: boolean;
   players$ = new BehaviorSubject<string[]>([]);
