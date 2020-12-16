@@ -28,31 +28,43 @@ export class GameComponent implements OnInit {
       switch (card.number) {
         case 1:
           this.appService.runCardOne();
+          break;
         case 2:
           this.appService.runCardTwo();
+          break;
         case 3:
           this.appService.runCardThree();
+          break;
         case 4:
           this.appService.runCardFour();
+          break;
         case 5:
           this.appService.runCardFive();
+          break;
         case 6:
           this.appService.runCardSix();
+          break;
         case 7:
           this.appService.runCardSeven();
+          break;
         case 8:
           this.appService.runCardEight();
+          break;
         case 9:
           this.appService.runCardNine();
+          break;
         case 10:
           this.appService.runCardTen();
+          break;
         case 11:
           this.appService.runCardJack();
+          break;
         case 12:
           this.appService.runCardQueen();
+          break;
         case 13:
           this.appService.runCardKing();
-  
+          break;
       }
     })
   }
@@ -65,5 +77,8 @@ export class GameComponent implements OnInit {
     this.socketService.endTurn();
   }
 
+  choosePlayer(player: string) {
+    this.socketService.choosePlayer(player);
+  }
 
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 export interface ICard {
   url: string;
@@ -14,11 +15,15 @@ export interface IPlayer {
 @Injectable()
 export class AppService {
   isInGame: boolean;
-  currentCard$ = new BehaviorSubject<ICard>(null);
-  currentPlayer$ =  new BehaviorSubject<string>(null);
-  whoAmI: string;
-  canEndTurn: boolean;
   players$ = new BehaviorSubject<string[]>([]);
+  currentCard$ = new BehaviorSubject<ICard>(null);
+  currentPlayer$ = new BehaviorSubject<string>(null);
+  whoAmI: string;
+  everyoneMsg$ = new BehaviorSubject<string>(null);
+  currentPlayerMsg: string;
+  allowChoosePlayer$ =  new BehaviorSubject<boolean>(false);
+  chosenPlayer$ =  new BehaviorSubject<string>(null);
+  canEndTurn: boolean;
 
   constructor() { }
 
@@ -26,19 +31,28 @@ export class AppService {
     this.currentCard$.next(card);
   }
 
-  // Next function to clear out curr card and set next player
-
-
   runCardOne() {
     this.canEndTurn = true;
   }
 
   runCardTwo() {
-    this.canEndTurn = true;
+    this.currentPlayerMsg = "Choose someone to drink";
+    this.allowChoosePlayer$.next(true);
+
+    this.chosenPlayer$.pipe(
+      filter(play => !!play),
+      take(1)
+    ).subscribe((player) => {
+      const person = this.currentPlayer$.value == this.whoAmI ? 'You' : this.currentPlayer$.value;
+      this.everyoneMsg$.next(`${person} chose ${player} to drink!`);
+      this.canEndTurn = true;
+    });
   }
 
   runCardThree() {
     this.canEndTurn = true;
+    const person = this.currentPlayer$.value == this.whoAmI ? 'You' : this.currentPlayer$.value;
+    this.everyoneMsg$.next(`${person} drink!`);
   }
 
   runCardFour() {

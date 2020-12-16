@@ -1,13 +1,24 @@
 <div style="display: flex; justify-content: space-around;">
   <h1>yerrr {{appService.whoAmI}}</h1>
   <h1>its {{(appService.currentPlayer$ | async)}} turn</h1>
-  <div style="display: flex; flex-direction: column;">
-    <span *ngFor="let player of (appService.players$ | async)">{{player}}</span>
-  </div>
+
+    <div *ngIf="(appService.allowChoosePlayer$ | async) && (appService.currentPlayer$ | async) == appService.whoAmI" style="display: flex; flex-direction: column;">
+      <a style="text-decoration: underline; color:blue; cursor: pointer;" *ngFor="let player of (appService.players$ | async)" (click)="choosePlayer(player)">{{player}}</a>
+    </div>
+    <div *ngIf="!(appService.allowChoosePlayer$ | async)" style="display: flex; flex-direction: column;">
+      <span *ngFor="let player of (appService.players$ | async)">{{player}}</span>
+    </div>
+
 </div>
 
-<div *ngIf="(appService.currentCard$| async) as card">
-  <span>The card is {{card.number}}</span>
+<div *ngIf="(appService.currentCard$| async) as card" style="display:flex; flex-direction: column; align-items: center;">
+  <p>The card is {{card.number}}</p>
+  <div *ngIf="(appService.currentPlayer$ | async) == appService.whoAmI && appService.currentPlayerMsg">
+    <p>{{appService.currentPlayerMsg}}</p>
+  </div>
+  <div *ngIf="(appService.everyoneMsg$ | async) as msg">
+    <p>{{appService.everyoneMsg$ | async}}</p>
+  </div>
 </div>
 
 <div *ngIf="(appService.currentPlayer$ | async) == appService.whoAmI">
