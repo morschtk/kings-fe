@@ -19,6 +19,9 @@
   <div *ngIf="(appService.everyoneMsg$ | async) as msg">
     <p>{{appService.everyoneMsg$ | async}}</p>
   </div>
+  <div *ngIf="card.number == 7" style="display:flex; flex-direction: column; align-items: center;">
+    <span *ngFor="let player of (appService.players$ | async)">{{player.name}} {{player.isGood}}</span>
+  </div>
 </div>
 
 <div *ngIf="(appService.currentPlayer$ | async).name == appService.whoAmI">

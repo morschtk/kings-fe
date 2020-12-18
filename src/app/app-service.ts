@@ -9,6 +9,7 @@ export interface ICard {
 
 export interface IPlayer {
   name: string;
+  isGood: boolean;
 }
 
 @Injectable()
@@ -67,7 +68,7 @@ export class AppService {
   }
 
   runCardSeven() {
-    
+    this.everyoneMsg$.next(`Last Person to click 7 loses`);
     this.canEndTurn = true;
   }
 

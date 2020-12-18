@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService, IPlayer } from '../app-service';
 import { SocketioService } from '../socketio.service';
-import { filter } from 'rxjs/operators'
+import { filter, take } from 'rxjs/operators'
 
 @Component({
   selector: 'game-component',
@@ -79,6 +79,20 @@ export class GameComponent implements OnInit {
 
   choosePlayer(player: IPlayer) {
     this.socketService.choosePlayer(player);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  listenForSeven(event: KeyboardEvent) {
+    this.appService.currentCard$.pipe(
+      filter(card => !!card),
+      take(1)
+    ).subscribe((card) => {
+      if (card.number == 7 && event.key == '7') {
+        console.log('you made it', event.key);
+      } else {
+        console.log('NO NO NO TRY AGAIN!');
+      }
+    });
   }
 
 }
