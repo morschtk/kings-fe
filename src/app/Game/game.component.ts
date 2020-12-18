@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from '../app-service';
+import { AppService, IPlayer } from '../app-service';
 import { SocketioService } from '../socketio.service';
 import { filter } from 'rxjs/operators'
 
@@ -77,7 +77,7 @@ export class GameComponent implements OnInit {
     this.socketService.endTurn();
   }
 
-  choosePlayer(player: string) {
+  choosePlayer(player: IPlayer) {
     this.socketService.choosePlayer(player);
   }
 

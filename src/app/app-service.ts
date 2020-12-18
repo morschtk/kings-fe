@@ -9,20 +9,19 @@ export interface ICard {
 
 export interface IPlayer {
   name: string;
-  index: number;
 }
 
 @Injectable()
 export class AppService {
   isInGame: boolean;
-  players$ = new BehaviorSubject<string[]>([]);
+  players$ = new BehaviorSubject<IPlayer[]>([]);
   currentCard$ = new BehaviorSubject<ICard>(null);
-  currentPlayer$ = new BehaviorSubject<string>(null);
+  currentPlayer$ = new BehaviorSubject<IPlayer>(null);
   whoAmI: string;
   everyoneMsg$ = new BehaviorSubject<string>(null);
   currentPlayerMsg: string;
   allowChoosePlayer$ =  new BehaviorSubject<boolean>(false);
-  chosenPlayer$ =  new BehaviorSubject<string>(null);
+  chosenPlayer$ =  new BehaviorSubject<IPlayer>(null);
   canEndTurn: boolean;
 
   constructor() { }
@@ -43,15 +42,15 @@ export class AppService {
       filter(play => !!play),
       take(1)
     ).subscribe((player) => {
-      const person = this.currentPlayer$.value == this.whoAmI ? 'You' : this.currentPlayer$.value;
-      this.everyoneMsg$.next(`${person} chose ${player} to drink!`);
+      const person = this.currentPlayer$.value.name == this.whoAmI ? 'You' : this.currentPlayer$.value.name;
+      this.everyoneMsg$.next(`${person} chose ${player.name} to drink!`);
       this.canEndTurn = true;
     });
   }
 
   runCardThree() {
     this.canEndTurn = true;
-    const person = this.currentPlayer$.value == this.whoAmI ? 'You' : this.currentPlayer$.value;
+    const person = this.currentPlayer$.value.name == this.whoAmI ? 'You' : this.currentPlayer$.value.name;
     this.everyoneMsg$.next(`${person} drink!`);
   }
 
@@ -68,6 +67,7 @@ export class AppService {
   }
 
   runCardSeven() {
+    
     this.canEndTurn = true;
   }
 

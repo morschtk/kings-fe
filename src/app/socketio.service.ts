@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
-import { AppService, ICard } from './app-service';
+import { AppService, ICard, IPlayer } from './app-service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +33,12 @@ export class SocketioService {
       this.appService.setCurrentCard(card);
     });
 
-    this.socket.on('choosePlayer', (player: string) => {
+    this.socket.on('choosePlayer', (player: IPlayer) => {
       this.appService.chosenPlayer$.next(player);
     });
 
     // This is were all the reset logic for each turn is
-    this.socket.on('nextPlayerTurn', (player: string) => {
+    this.socket.on('nextPlayerTurn', (player: IPlayer) => {
       this.appService.currentCard$.next(null);
       this.appService.currentPlayer$.next(player);
       this.appService.chosenPlayer$.next(null)
@@ -53,8 +53,8 @@ export class SocketioService {
     this.socket.emit('addPlayer', name);
   }
 
-  choosePlayer(name: string) {
-    this.socket.emit('choosePlayerBE', name);
+  choosePlayer(player: IPlayer) {
+    this.socket.emit('choosePlayerBE', player);
   }
   
   drawCard() {

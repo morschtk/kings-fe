@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   }
 
   addUser() {
-    if (this.appService.players$.value.find(player => player === this.newUser)) {
+    if (this.appService.players$.value.find(player => player.name === this.newUser)) {
       return;
     }
     this.appService.whoAmI = this.newUser;
