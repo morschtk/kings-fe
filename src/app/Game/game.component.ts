@@ -89,6 +89,7 @@ export class GameComponent implements OnInit {
     ).subscribe((card) => {
       if (card.number == 7 && event.key == '7') {
         console.log('you made it', event.key);
+        this.socketService.clickedSeven();
       } else {
         console.log('NO NO NO TRY AGAIN!');
       }

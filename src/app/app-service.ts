@@ -31,6 +31,10 @@ export class AppService {
     this.currentCard$.next(card);
   }
 
+  updatePlayers(newPlayers: IPlayer[]) {
+    this.players$.next(newPlayers);
+  }
+
   runCardOne() {
     this.canEndTurn = true;
   }

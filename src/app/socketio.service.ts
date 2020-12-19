@@ -36,6 +36,10 @@ export class SocketioService {
     this.socket.on('choosePlayer', (player: IPlayer) => {
       this.appService.chosenPlayer$.next(player);
     });
+    
+    this.socket.on('updatePlayers', (players: IPlayer[]) => {
+      this.appService.updatePlayers(players);
+    });
 
     // This is were all the reset logic for each turn is
     this.socket.on('nextPlayerTurn', (player: IPlayer) => {
@@ -46,6 +50,7 @@ export class SocketioService {
       this.appService.currentPlayerMsg = null;
       this.appService.allowChoosePlayer$.next(null);
       this.appService.canEndTurn = false;
+      this.appService.players$.value.forEach(player => player.isGood = false);
     });
   }
 
@@ -55,6 +60,10 @@ export class SocketioService {
 
   choosePlayer(player: IPlayer) {
     this.socket.emit('choosePlayerBE', player);
+  }
+
+  clickedSeven() {
+    this.socket.emit('clickedSeven', this.appService.whoAmI);
   }
   
   drawCard() {
