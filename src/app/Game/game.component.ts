@@ -83,12 +83,16 @@ export class GameComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   listenForSeven(event: KeyboardEvent) {
+    if (!this.appService.isListening) {
+      return;
+    }
+
     this.appService.currentCard$.pipe(
       filter(card => !!card),
       take(1)
     ).subscribe((card) => {
       if (card.number == 7 && event.key == '7') {
-        console.log('you made it', event.key);
+        this.appService.isListening = false;
         this.socketService.clickedSeven();
       } else {
         console.log('NO NO NO TRY AGAIN!');

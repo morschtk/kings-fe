@@ -41,6 +41,10 @@ export class SocketioService {
       this.appService.updatePlayers(players);
     });
 
+    this.socket.on('cardSevenFinish', (players: IPlayer[]) => {
+      this.appService.cardSevenFinish(players);
+    });
+
     // This is were all the reset logic for each turn is
     this.socket.on('nextPlayerTurn', (player: IPlayer) => {
       this.appService.currentCard$.next(null);

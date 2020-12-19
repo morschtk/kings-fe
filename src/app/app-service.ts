@@ -24,6 +24,7 @@ export class AppService {
   allowChoosePlayer$ =  new BehaviorSubject<boolean>(false);
   chosenPlayer$ =  new BehaviorSubject<IPlayer>(null);
   canEndTurn: boolean;
+  isListening: boolean;
 
   constructor() { }
 
@@ -33,6 +34,16 @@ export class AppService {
 
   updatePlayers(newPlayers: IPlayer[]) {
     this.players$.next(newPlayers);
+  }
+
+  // Stop Listener and tell everyone who lost.
+  cardSevenFinish(newPlayers: IPlayer[]) {
+    this.players$.next(newPlayers);
+    this.isListening = false;
+    const loser = newPlayers.find(play => !play.isGood);
+
+    this.everyoneMsg$.next(`${loser.name} you are the slowest person, DRINK!`);
+    this.canEndTurn = true;
   }
 
   runCardOne() {
@@ -72,8 +83,8 @@ export class AppService {
   }
 
   runCardSeven() {
+    this.isListening = true;
     this.everyoneMsg$.next(`Last Person to click 7 loses`);
-    this.canEndTurn = true;
   }
 
   runCardEight() {
