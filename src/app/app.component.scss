@@ -1,0 +1,21 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.the-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.login-splash {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

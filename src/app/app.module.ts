@@ -9,6 +9,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { SocketioService } from './socketio.service';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';  
 
 @NgModule({
   declarations: [
@@ -17,9 +22,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
     BrowserAnimationsModule
   ],
   providers: [

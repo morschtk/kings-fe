@@ -1,10 +1,23 @@
+<div class="the-app">
+  <p>
+    <mat-toolbar color="primary">
+      <span>Kings</span>
+      <span class="example-spacer"></span>
+      <span *ngIf="appService.isInGame">(appService.currentPlayer$ | async).name</span>
+    </mat-toolbar>
+  </p>
 
+  <div class="login-splash" *ngIf="!appService.isInGame">
+    <form class="login-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>WHAT'S YOU'RE NAME</mat-label>
+        <input matInput placeholder="Ex. Ezekiel" name="name" [(ngModel)]="newUser">
+      </mat-form-field>
+      <button mat-raised-button (click)="addUser(newUser)" color="accent">Add that User fool!</button>
+    </form>
+  </div>
 
-<div *ngIf="!appService.isInGame">
-  <input [(ngModel)]="newUser" />
-  <button (click)="addUser(newUser)">Add that User fool!</button> 
-</div>
-
-<div *ngIf="appService.isInGame">
-  <router-outlet></router-outlet>
+  <div *ngIf="appService.isInGame">
+    <router-outlet></router-outlet>
+  </div>
 </div>
