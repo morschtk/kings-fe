@@ -3,7 +3,7 @@
     <mat-toolbar color="primary">
       <span>Kings</span>
       <span class="example-spacer"></span>
-      <span *ngIf="appService.isInGame">(appService.currentPlayer$ | async).name</span>
+      <span *ngIf="appService.isInGame">{{appService.whoAmI}}</span>
     </mat-toolbar>
   </p>
 
