@@ -1,0 +1,17 @@
+
+.players-list {
+  border: 1px solid #616161;
+  border-radius: .5rem;
+  background-color: #cfd8dc;  
+  flex: .5;
+  margin: 1rem;
+
+  mat-list-item {
+    padding: .75rem;
+    font-size: 16px;
+  }
+  .selected {
+    color: #673ab7;
+    font-weight: bold;
+  }
+}
